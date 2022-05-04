@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import { SearchComponent } from './components/searchComponent/SearchComponent'
-import './App.css'
-import { getMaxSol, getPlanat } from './servises/api'
-import { toast } from 'react-toastify'
 import { AxiosResponse } from 'axios'
+import { toast } from 'react-toastify'
+import { Button, CircularProgress, Typography } from '@mui/material'
+
+import { SearchComponent } from './components/searchComponent/SearchComponent'
 import { PhotoList } from './components/photoList/PhotoList'
-import { Button, CircularProgress } from '@mui/material'
+
+import { getMaxSol, getPlanat } from './servises/api'
 
 function App() {
   const [photos, setPhotos] = useState<IPhoto[]>([])
@@ -29,7 +30,6 @@ function App() {
   }, [rover])
 
   const getAllPhotos = async (pageToLoad = 1) => {
-    console.log(sol)
     setStatus('pending')
     try {
       const response: AxiosResponse = await getPlanat(
@@ -44,14 +44,13 @@ function App() {
           ? response.data.photos
           : [...prevState, ...response.data.photos]
       )
-
-      setStatus('resolved')
-
       if (response.data.photos.length === 25) {
         setVisibleButton(true)
       }
     } catch (error) {
       toast.error('Something went wrong, refresh the page or try again later')
+    } finally {
+      setStatus('resolved')
     }
   }
 
@@ -79,7 +78,9 @@ function App() {
       />
 
       {status === 'idle' ? (
-        <h2 style={{ textAlign: 'center' }}>Please, fill form.</h2>
+        <Typography variant="h4" textAlign={'center'}>
+          Please, fill form.
+        </Typography>
       ) : (
         <PhotoList photos={photos} />
       )}

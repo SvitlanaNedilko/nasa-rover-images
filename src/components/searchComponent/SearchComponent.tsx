@@ -1,27 +1,16 @@
 import React, { ChangeEvent, useState } from 'react'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { Button, TextField, styled } from '@mui/material'
+import {
+  Button,
+  TextField,
+  Select,
+  SelectChangeEvent,
+  InputLabel,
+  MenuItem,
+  FormControl,
+} from '@mui/material'
 import * as yup from 'yup'
 
-const FormContainer = styled('form')`
-  display: flex;
-  margin: 32px auto;
-  gap: 16px;
-  width: 80%;
-  ${({ theme }) => theme.breakpoints.down('md')} {
-    width: 100%;
-    padding: 0 32px;
-  }
-  ${({ theme }) => theme.breakpoints.down('sm')} {
-    flex-direction: column;
-    width: 100%;
-    margin: 32px 0;
-    gap: 32px;
-  }
-`
+import FormContainer from '../theme/FormContainer'
 
 const getSchema = (maxSol: number) =>
   yup
@@ -45,7 +34,7 @@ interface ISearchComponentProps {
   setCamera: (camera: string) => void
   setSol: (sol: string) => void
   getSol: VoidFunction
-  getAllPhotos: () => void
+  getAllPhotos: VoidFunction
 }
 
 export const SearchComponent: React.FC<ISearchComponentProps> = ({
@@ -71,8 +60,7 @@ export const SearchComponent: React.FC<ISearchComponentProps> = ({
   }
 
   const handleChangeSol = (event: ChangeEvent<HTMLInputElement>) => {
-    const value: string = event.target.value
-    setSol(value)
+    setSol(event.target.value as string)
   }
 
   const handleSubmit = async (e: any) => {
@@ -91,16 +79,16 @@ export const SearchComponent: React.FC<ISearchComponentProps> = ({
       <FormControl
         sx={{ width: { sm: 'calc((100% - 3 * (16px))/4)', xs: '100%' } }}
       >
-        <InputLabel id="demo-simple-select-label">Kinde of rover</InputLabel>
+        <InputLabel id="rover-label">Rover</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="rover-label"
+          id="rover"
           value={rover}
-          label="Kinde of camera"
+          label="Rover"
           onChange={handleChange}
           required
         >
-          <MenuItem value={'curiosity'}>curiosity</MenuItem>
+          <MenuItem value={'curiosity'}>Curiosity</MenuItem>
           <MenuItem value={'opportunity'}>Opportunity</MenuItem>
           <MenuItem value={'spirit'}>Spirit</MenuItem>
         </Select>
@@ -109,12 +97,12 @@ export const SearchComponent: React.FC<ISearchComponentProps> = ({
       <FormControl
         sx={{ width: { sm: 'calc((100% - 3 * (16px))/4)', xs: '100%' } }}
       >
-        <InputLabel id="demo-simple-select-label">Camera</InputLabel>
+        <InputLabel id="camera-label">Camera</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="camera-label"
+          id="camera"
           value={camera}
-          label="Kinde of rover"
+          label="Camera"
           onChange={handleChangeCamera}
           required
         >
@@ -128,7 +116,6 @@ export const SearchComponent: React.FC<ISearchComponentProps> = ({
       </FormControl>
 
       <TextField
-        id="outlined-error-helper-text"
         label="Sol"
         helperText={!!error ? error : `From 0 to ${maxSol}`}
         value={sol}

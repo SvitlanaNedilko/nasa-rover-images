@@ -20,14 +20,3 @@ export function getMaxSol(kindeOfRover: string) {
     `/manifests/${kindeOfRover}?api_key=A2kQ5w9gW9kMUYitoNHhHnh6q97lSzPwrTVU7zUe`
   )
 }
-
-{
-  /* {Array(maxSol)
-              .fill(null)
-              .map((_, index) => index.toString())
-              .map((item: string) => (
-                <MenuItem key={item} value={item}>
-                  {item}
-                </MenuItem>
-              ))} */
-}
