@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/nasa-rover-images/static/css/main.917fcd66.css",
+    "main.js": "/nasa-rover-images/static/js/main.25121ba0.js",
+    "static/js/787.37980ae4.chunk.js": "/nasa-rover-images/static/js/787.37980ae4.chunk.js",
+    "index.html": "/nasa-rover-images/index.html",
+    "main.917fcd66.css.map": "/nasa-rover-images/static/css/main.917fcd66.css.map",
+    "main.25121ba0.js.map": "/nasa-rover-images/static/js/main.25121ba0.js.map",
+    "787.37980ae4.chunk.js.map": "/nasa-rover-images/static/js/787.37980ae4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.917fcd66.css",
+    "static/js/main.25121ba0.js"
+  ]
+}
