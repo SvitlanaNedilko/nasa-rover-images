@@ -146,7 +146,7 @@ export const SearchComponent: React.FC<ISearchComponentProps> = ({
           height: '56px',
         }}
       >
-        Contained
+        Apply
       </Button>
     </FormContainer>
   )

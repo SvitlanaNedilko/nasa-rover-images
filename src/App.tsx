@@ -5,6 +5,7 @@ import { getMaxSol, getPlanat } from './servises/api'
 import { toast } from 'react-toastify'
 import { AxiosResponse } from 'axios'
 import { PhotoList } from './components/photoList/PhotoList'
+import { Button, CircularProgress } from '@mui/material'
 
 function App() {
   const [photos, setPhotos] = useState<IPhoto[]>([])
@@ -13,6 +14,8 @@ function App() {
   const [camera, setCamera] = useState<string>('')
   const [maxSol, setMaxSol] = useState<number>(0)
   const [sol, setSol] = useState<string>('')
+  const [visibleButton, setVisibleButton] = useState<boolean>(false)
+  const [status, setStatus] = useState('idle')
 
   const getSol = useCallback(async () => {
     try {
@@ -27,6 +30,7 @@ function App() {
 
   const getAllPhotos = async (pageToLoad = 1) => {
     console.log(sol)
+    setStatus('pending')
     try {
       const response: AxiosResponse = await getPlanat(
         pageToLoad,
@@ -34,13 +38,18 @@ function App() {
         sol,
         camera
       )
-      console.log(response.data.photos)
 
       setPhotos((prevState) =>
         pageToLoad === 1
           ? response.data.photos
           : [...prevState, ...response.data.photos]
       )
+
+      setStatus('resolved')
+
+      if (response.data.photos.length === 25) {
+        setVisibleButton(true)
+      }
     } catch (error) {
       toast.error('Something went wrong, refresh the page or try again later')
     }
@@ -68,11 +77,29 @@ function App() {
         setRover={setRover}
         getAllPhotos={getAllPhotos}
       />
-      <PhotoList photos={photos} />
 
-      <button type="button" onClick={handlLoadMore} className="Button">
-        Load more
-      </button>
+      {status === 'idle' ? (
+        <h2 style={{ textAlign: 'center' }}>Please, fill form.</h2>
+      ) : (
+        <PhotoList photos={photos} />
+      )}
+
+      {status === 'pending' ? (
+        <CircularProgress
+          color="info"
+          sx={{ display: 'flex', margin: '32px auto' }}
+        />
+      ) : (
+        visibleButton && (
+          <Button
+            variant="contained"
+            onClick={handlLoadMore}
+            sx={{ display: 'flex', margin: '32px auto' }}
+          >
+            Load more
+          </Button>
+        )
+      )}
     </>
   )
 }
